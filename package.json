@@ -1,0 +1,11 @@
+{
+  "name": "code-quest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Plataforma interactiva de aprendizaje full-stack",
+  "scripts": {
+    "test": "node --test tests/filter-logic.test.mjs",
+    "serve": "npx serve ."
+  }
+}

@@ -1,0 +1,41 @@
+:root {
+  --bg: #0c0f14;
+  --bg-elevated: #141922;
+  --text: #ffffff;
+  --muted: #b8b2aa;
+  --accent: #ff6a3d;
+  --accent-glow: rgba(255, 106, 61, 0.35);
+  --cyan: #3dd6f5;
+  --violet: #a78bfa;
+  --green: #4ade80;
+  --gold: #fbbf24;
+  --danger: #f87171;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-strong: rgba(255, 255, 255, 0.08);
+  --stroke: rgba(255, 255, 255, 0.1);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  --font: "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --world-1: #3dd6f5;
+  --world-2: #4ade80;
+  --world-3: #f472b6;
+  --world-4: #fb923c;
+  --world-5: #a78bfa;
+  --world-6: #38bdf8;
+  --world-7: #fbbf24;
+  --gradient-hero: linear-gradient(135deg, #ff6a3d 0%, #f472b6 45%, #3dd6f5 100%);
+  --gradient-xp: linear-gradient(135deg, #fbbf24, #ff6a3d);
+  --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <title>CI Boss Fight — Code Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/games.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+  </head>
+  <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="page-shell game-layout">
+      <header class="game-header">
+        <div>
+          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
+          <h1>CI Boss Fight</h1>
+          <p>El robot teacher (CI pipeline) falló. ¿Cómo lo arreglás sin hacer trampa?</p>
+        </div>
+        <div class="game-meta">
+          <span class="badge-pill">Mundo 7</span>
+        </div>
+      </header>
+      <div id="ci-pipeline" class="ci-pipeline"></div>
+      <div id="ci-scenario" class="glass" style="padding:24px;margin-bottom:16px"></div>
+      <div id="ci-options" class="quiz-options"></div>
+      <div id="ci-feedback"></div>
+    </div>
+    <script type="module" src="../js/background.js"></script>
+    <script type="module" src="../js/games/ci-boss.js"></script>
+  </body>
+</html>

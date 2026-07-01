@@ -1,0 +1,140 @@
+{
+  "worlds": [
+    {
+      "id": "world-1",
+      "number": 1,
+      "title": "DOM & Datos",
+      "color": "--world-1",
+      "project": "mini-job-board",
+      "projectUrl": "https://alejosworkstuff.github.io/mini-job-board/",
+      "description": "HTML semántico, filtros en vivo, localStorage y URL como estado compartible.",
+      "games": ["filter-fighter"]
+    },
+    {
+      "id": "world-2",
+      "number": 2,
+      "title": "Frontend sin framework",
+      "color": "--world-2",
+      "project": "mini-job-board",
+      "projectUrl": "https://github.com/alejosworkstuff/mini-job-board",
+      "description": "Funciones puras vs DOM, fetch + JSON, y tests sin React.",
+      "games": ["stack-matcher", "bug-hunt"]
+    },
+    {
+      "id": "world-3",
+      "number": 3,
+      "title": "React & Estado",
+      "color": "--world-3",
+      "project": "mini-ecommerce",
+      "projectUrl": "https://mini-ecommerce-nextjs-psi.vercel.app/",
+      "description": "Context API, hooks, y estados loading / success / error.",
+      "games": ["decision-dungeon"]
+    },
+    {
+      "id": "world-4",
+      "number": 4,
+      "title": "Next.js & APIs",
+      "color": "--world-4",
+      "project": "mini-ecommerce",
+      "projectUrl": "https://github.com/alejosworkstuff/mini-ecommerce-nextjs",
+      "description": "SSG/ISR vs client components, REST/GraphQL y HTTP client resiliente.",
+      "games": ["request-tracer", "decision-dungeon"]
+    },
+    {
+      "id": "world-5",
+      "number": 5,
+      "title": "Auth & Seguridad",
+      "color": "--world-5",
+      "project": "mini-ecommerce + ia-stories",
+      "projectUrl": "https://mini-ecommerce-nextjs-psi.vercel.app/",
+      "description": "Clerk, rutas protegidas, guardrails y rate limiting.",
+      "games": ["auth-gate", "decision-dungeon"]
+    },
+    {
+      "id": "world-6",
+      "number": 6,
+      "title": "AI & RAG",
+      "color": "--world-6",
+      "project": "ia-stories",
+      "projectUrl": "https://ai-stories-ashy.vercel.app/",
+      "description": "chunk → embed → retrieve → generate, streaming y fallback.",
+      "games": ["pipeline-puzzle"]
+    },
+    {
+      "id": "world-7",
+      "number": 7,
+      "title": "Ingeniería",
+      "color": "--world-7",
+      "project": "todos los repos",
+      "projectUrl": "https://alejosworkstuff.github.io/portfolio/",
+      "description": "CI pipeline, Vitest, Playwright, Sentry y Definition of Done.",
+      "games": ["ci-boss"]
+    }
+  ],
+  "games": {
+    "filter-fighter": {
+      "id": "filter-fighter",
+      "title": "Filter Fighter",
+      "subtitle": "Filtrá empleos como en mini-job-board",
+      "path": "games/filter-fighter.html",
+      "world": 1,
+      "levels": 3
+    },
+    "stack-matcher": {
+      "id": "stack-matcher",
+      "title": "Stack Matcher",
+      "subtitle": "Emparejá proyectos con su tech stack",
+      "path": "games/stack-matcher.html",
+      "world": 2,
+      "levels": 1
+    },
+    "decision-dungeon": {
+      "id": "decision-dungeon",
+      "title": "Decision Dungeon",
+      "subtitle": "Elegí la arquitectura correcta bajo presión",
+      "path": "games/decision-dungeon.html",
+      "world": 3,
+      "levels": 8
+    },
+    "pipeline-puzzle": {
+      "id": "pipeline-puzzle",
+      "title": "Pipeline Puzzle",
+      "subtitle": "Ordená el flujo RAG de ia-stories",
+      "path": "games/pipeline-puzzle.html",
+      "world": 6,
+      "levels": 2
+    },
+    "request-tracer": {
+      "id": "request-tracer",
+      "title": "Request Tracer",
+      "subtitle": "Trazá el checkout de mini-ecommerce",
+      "path": "games/request-tracer.html",
+      "world": 4,
+      "levels": 1
+    },
+    "ci-boss": {
+      "id": "ci-boss",
+      "title": "CI Boss Fight",
+      "subtitle": "Derrotá al robot teacher del pipeline",
+      "path": "games/ci-boss.html",
+      "world": 7,
+      "levels": 4
+    },
+    "bug-hunt": {
+      "id": "bug-hunt",
+      "title": "Bug Hunt",
+      "subtitle": "Encontrá el bug en snippets reales",
+      "path": "games/bug-hunt.html",
+      "world": 2,
+      "levels": 3
+    },
+    "auth-gate": {
+      "id": "auth-gate",
+      "title": "Auth Gate",
+      "subtitle": "¿Qué rutas puede ver cada usuario?",
+      "path": "games/auth-gate.html",
+      "world": 5,
+      "levels": 1
+    }
+  }
+}

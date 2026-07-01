@@ -1,0 +1,110 @@
+[
+  {
+    "id": 21,
+    "title": "Fullstack Developer",
+    "company": "CodeWave",
+    "type": "Remote",
+    "location": "LATAM",
+    "seniority": "Semi-Senior",
+    "salary": "$4k–6k USD / month"
+  },
+  {
+    "id": 4,
+    "title": "Backend Developer",
+    "company": "Cloud Delta",
+    "type": "Onsite",
+    "location": "Mexico",
+    "seniority": "Trainee",
+    "salary": "$1.8k–2.4k USD / month"
+  },
+  {
+    "id": 11,
+    "title": "Senior Frontend Developer",
+    "company": "ScaleUp Corp",
+    "type": "Remote",
+    "location": "Global",
+    "seniority": "Senior",
+    "salary": "$6k–9k USD / month"
+  },
+  {
+    "id": 6,
+    "title": "React Developer",
+    "company": "PixelForge",
+    "type": "Hybrid",
+    "location": "Buenos Aires",
+    "seniority": "Junior",
+    "salary": "$3.5k–5k USD / month"
+  },
+  {
+    "id": 14,
+    "title": "DevOps Engineer",
+    "company": "InfraStack",
+    "type": "Remote",
+    "location": "Europe",
+    "seniority": "Senior",
+    "salary": "€55k–72k gross / year"
+  },
+  {
+    "id": 15,
+    "title": "Platform Engineer",
+    "company": "CloudNine",
+    "type": "Hybrid",
+    "location": "Berlin",
+    "seniority": "Semi-Senior",
+    "salary": "€65k–80k gross / year"
+  },
+  {
+    "id": 8,
+    "title": "Junior Web Developer",
+    "company": "StartupLab",
+    "type": "Onsite",
+    "location": "Córdoba",
+    "seniority": "Trainee",
+    "salary": "$2k–2.8k USD / month"
+  },
+  {
+    "id": 3,
+    "title": "Frontend Engineer",
+    "company": "DesignFirst",
+    "type": "Remote",
+    "location": "LATAM",
+    "seniority": "Junior",
+    "salary": "$3k–4.5k USD / month"
+  },
+  {
+    "id": 12,
+    "title": "Staff Engineer",
+    "company": "MegaCorp",
+    "type": "Remote",
+    "location": "US",
+    "seniority": "Senior",
+    "salary": "$7k–10k USD / month"
+  },
+  {
+    "id": 18,
+    "title": "Full Stack Developer",
+    "company": "EuroTech",
+    "type": "Hybrid",
+    "location": "Madrid",
+    "seniority": "Semi-Senior",
+    "salary": "€48k–62k gross / year"
+  },
+  {
+    "id": 9,
+    "title": "UI Developer",
+    "company": "BrandStudio",
+    "type": "Remote",
+    "location": "Global",
+    "seniority": "Junior",
+    "salary": "$2.5k–3.2k USD / month"
+  },
+  {
+    "id": 7,
+    "title": "Node.js Developer",
+    "company": "APIWorks",
+    "type": "Remote",
+    "location": "LATAM",
+    "seniority": "Semi-Senior",
+    "salary": "$5k–7k USD / month"
+  }
+]

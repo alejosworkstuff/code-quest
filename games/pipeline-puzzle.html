@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <title>Pipeline Puzzle — Code Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/games.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+  </head>
+  <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="page-shell game-layout">
+      <header class="game-header">
+        <div>
+          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
+          <h1>Pipeline Puzzle</h1>
+          <p>Ordená el flujo RAG de ia-stories: chunk → embed → retrieve → generate.</p>
+        </div>
+        <div class="game-meta">
+          <span class="badge-pill">Mundo 6</span>
+          <span class="badge-pill">ia-stories</span>
+        </div>
+      </header>
+      <div id="level-tabs" class="level-tabs"></div>
+      <div class="pipeline-board glass" id="pipeline-board">
+        <h3 style="margin-bottom:8px">Tu pipeline</h3>
+        <div id="pipeline-slots" class="pipeline-slots"></div>
+        <h3 style="margin:16px 0 8px">Pasos disponibles</h3>
+        <div id="pipeline-pool" class="pipeline-pool"></div>
+      </div>
+      <div id="pipeline-feedback" style="margin-top:16px"></div>
+    </div>
+    <script type="module" src="../js/background.js"></script>
+    <script type="module" src="../js/games/pipeline-puzzle.js"></script>
+  </body>
+</html>

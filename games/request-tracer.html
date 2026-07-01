@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <title>Request Tracer — Code Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/games.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+  </head>
+  <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="page-shell game-layout">
+      <header class="game-header">
+        <div>
+          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
+          <h1>Request Tracer</h1>
+          <p>Trazá el flujo de checkout en mini-ecommerce: UI → API → Redis → Success.</p>
+        </div>
+        <div class="game-meta">
+          <span class="badge-pill">Mundo 4</span>
+        </div>
+      </header>
+      <p id="tracer-mission" style="margin-bottom:20px"></p>
+      <div id="tracer-diagram" class="tracer-diagram glass"></div>
+      <div id="tracer-detail" class="tracer-detail glass"></div>
+    </div>
+    <script type="module" src="../js/background.js"></script>
+    <script type="module" src="../js/games/request-tracer.js"></script>
+  </body>
+</html>

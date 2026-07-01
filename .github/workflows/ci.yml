@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate JSON data files
+        run: |
+          node -e "
+            const fs = require('fs');
+            ['curriculum', 'decisions', 'stacks', 'jobs-sample', 'snippets'].forEach(name => {
+              JSON.parse(fs.readFileSync('data/' + name + '.json', 'utf8'));
+              console.log('OK:', name + '.json');
+            });
+          "
+
+      - name: Run filter-logic tests
+        run: node --test tests/filter-logic.test.mjs

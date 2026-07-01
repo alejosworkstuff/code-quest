@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <title>Auth Gate — Code Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/tokens.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+    <link rel="stylesheet" href="../css/games.css" />
+    <link rel="stylesheet" href="../css/animations.css" />
+  </head>
+  <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="page-shell game-layout">
+      <header class="game-header">
+        <div>
+          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
+          <h1>Auth Gate</h1>
+          <p>Probá guest, user y admin. ¿Qué rutas puede ver cada uno?</p>
+        </div>
+        <div class="game-meta">
+          <span class="badge-pill">Mundo 5</span>
+          <span class="badge-pill">Clerk</span>
+        </div>
+      </header>
+      <div class="auth-map">
+        <div id="auth-roles" class="auth-roles"></div>
+        <div>
+          <div id="auth-routes" class="auth-routes"></div>
+          <div id="auth-explain" style="margin-top:16px"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../js/background.js"></script>
+    <script type="module" src="../js/games/auth-gate.js"></script>
+  </body>
+</html>

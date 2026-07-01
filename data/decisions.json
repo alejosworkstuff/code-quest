@@ -1,0 +1,212 @@
+{
+  "scenarios": [
+    {
+      "id": "redis-vs-map",
+      "tag": "mini-ecommerce",
+      "title": "Pedidos en Vercel serverless",
+      "prompt": "Creaste un pedido en la instancia A del servidor. El usuario consulta sus compras y cae en la instancia B. El pedido desapareció. ¿Qué storage elegís para guardar pedidos?",
+      "options": [
+        {
+          "id": "map",
+          "label": "Map en memoria (JavaScript)",
+          "correct": false,
+          "feedback": "Un Map vive solo en una instancia. En serverless cada request puede ir a otra máquina — el pedido se pierde entre instancias."
+        },
+        {
+          "id": "redis",
+          "label": "Redis con fallback a Map en local",
+          "correct": true,
+          "feedback": "Correcto. Redis centraliza datos entre todas las instancias. En local, el Map te deja desarrollar sin pagar Redis."
+        },
+        {
+          "id": "postgres",
+          "label": "Postgres desde el día 1",
+          "correct": false,
+          "feedback": "Postgres es la opción seria en producción real, pero para este demo sumaría semanas (migraciones, ORM). Redis cubre el problema de instancias sin overkill."
+        }
+      ]
+    },
+    {
+      "id": "clerk-vs-custom",
+      "tag": "mini-ecommerce",
+      "title": "Autenticación para el portfolio",
+      "prompt": "Necesitás login, sesiones, rutas protegidas y rol admin en la tienda demo. ¿Qué enfoque elegís?",
+      "options": [
+        {
+          "id": "custom",
+          "label": "Auth custom (hashes, tokens, recovery)",
+          "correct": false,
+          "feedback": "Auth custom demuestra criptografía, pero el riesgo de bugs de seguridad es alto y no es el foco de este portfolio."
+        },
+        {
+          "id": "clerk",
+          "label": "Clerk (@clerk/nextjs)",
+          "correct": true,
+          "feedback": "Correcto. Clerk integra middleware, sign-in UI y auth() en APIs con pocas líneas. Demostrás consumir auth de producto como en una startup."
+        },
+        {
+          "id": "authjs",
+          "label": "Auth.js con adaptador DB custom",
+          "correct": false,
+          "feedback": "Auth.js es válido y gratis, pero requiere más configuración (adaptador, callbacks, páginas). Para un portfolio, Clerk tiene mejor ROI."
+        }
+      ]
+    },
+    {
+      "id": "ssg-vs-csr",
+      "tag": "mini-ecommerce",
+      "title": "Página de catálogo de productos",
+      "prompt": "El catálogo cambia poco, necesitás buen SEO y carga rápida. El carrito sí necesita estado interactivo en el browser. ¿Cómo renderizás /products?",
+      "options": [
+        {
+          "id": "csr",
+          "label": "CSR puro — React pinta todo en el cliente",
+          "correct": false,
+          "feedback": "CSR es simple mentalmente, pero Google ve un cascarón vacío al principio y la primera carga es más lenta."
+        },
+        {
+          "id": "ssg-isr",
+          "label": "SSG + ISR (revalidate: 60) para catálogo; Client Components para carrito",
+          "correct": true,
+          "feedback": "Correcto. HTML estático al instante para SEO/velocidad; el carrito sigue siendo reactivo en el cliente donde hace falta."
+        },
+        {
+          "id": "ssr-all",
+          "label": "SSR en cada request para todo el sitio",
+          "correct": false,
+          "feedback": "SSR en cada visita cuesta más en Vercel sin beneficio claro para un catálogo que cambia poco."
+        }
+      ]
+    },
+    {
+      "id": "server-total",
+      "tag": "mini-ecommerce",
+      "title": "Checkout y manipulación de precios",
+      "prompt": "Un usuario abre DevTools y envía { total: 0.01 } en el POST de checkout. ¿Qué hacés?",
+      "options": [
+        {
+          "id": "trust",
+          "label": "Confiar en body.total del cliente",
+          "correct": false,
+          "feedback": "Red flag inmediata en entrevista. El navegador es territorio del usuario — nunca confíes en totales del cliente."
+        },
+        {
+          "id": "recalc",
+          "label": "Recalcular total en servidor con computeOrderTotal()",
+          "correct": true,
+          "feedback": "Correcto. El servidor es la fuente de verdad del dinero. Comparás item.id con el catálogo real y rechazás si no coincide."
+        },
+        {
+          "id": "hide",
+          "label": "Ocultar el campo total del formulario",
+          "correct": false,
+          "feedback": "Ocultar el campo no impide que alguien manipule la request HTTP directamente."
+        }
+      ]
+    },
+    {
+      "id": "vanilla-job-board",
+      "tag": "mini-job-board",
+      "title": "¿Migrar mini-job-board a React?",
+      "prompt": "Un recruiter dice que quiere ver React everywhere. mini-ecommerce ya usa Next.js. ¿Migrás el job board?",
+      "options": [
+        {
+          "id": "migrate",
+          "label": "Sí, migrar a React + Vite",
+          "correct": false,
+          "feedback": "Duplicaría el mensaje de mini-ecommerce y añadiría build/bundler para un sitio que vive bien en GitHub Pages estático."
+        },
+        {
+          "id": "keep",
+          "label": "No — mantener vanilla JS a propósito",
+          "correct": true,
+          "feedback": "Correcto. Demostrás dominio de fundamentos (DOM, eventos, fetch) sin que React oculte esas capas. mini-ecommerce ya cubre React."
+        },
+        {
+          "id": "rewrite",
+          "label": "Reescribir en Python Flask",
+          "correct": false,
+          "feedback": "Python no es parte de tu stack de portfolio y no aporta señal para roles frontend/fullstack JS."
+        }
+      ]
+    },
+    {
+      "id": "url-state",
+      "tag": "mini-job-board",
+      "title": "Estado de filtros compartible",
+      "prompt": "Querés que un amigo abra el link y vea exactamente tus filtros (remote + React). ¿Dónde guardás el estado?",
+      "options": [
+        {
+          "id": "memory",
+          "label": "Solo variables en memoria JS",
+          "correct": false,
+          "feedback": "Al recargar o compartir el link se pierde todo. Se siente demo de tutorial, no producto."
+        },
+        {
+          "id": "url",
+          "label": "Query params en la URL (?type=remote&q=react)",
+          "correct": true,
+          "feedback": "Correcto. La URL es la fuente de verdad compartible. Refresh y atrás/adelante del browser funcionan."
+        },
+        {
+          "id": "session",
+          "label": "sessionStorage sin URL",
+          "correct": false,
+          "feedback": "sessionStorage no genera links compartibles — cada pestaña es aislada."
+        }
+      ]
+    },
+    {
+      "id": "ai-fallback",
+      "tag": "ia-stories",
+      "title": "API de IA sin créditos (HTTP 402)",
+      "prompt": "Replicate devuelve 402 — sin créditos. Un visitante del portfolio abre tu demo. ¿Qué muestra la app?",
+      "options": [
+        {
+          "id": "error",
+          "label": "Solo un error rojo",
+          "correct": false,
+          "feedback": "Técnicamente correcto, pero mata la demo en entrevistas. El visitante ve una app rota."
+        },
+        {
+          "id": "fallback",
+          "label": "Fallback local determinista + aviso honesto",
+          "correct": true,
+          "feedback": "Correcto. localGenerator.js sigue funcionando. Demostrás contratos HTTP y degradación elegante sin fingir que es IA."
+        },
+        {
+          "id": "fake",
+          "label": "Mostrar texto random sin avisar",
+          "correct": false,
+          "feedback": "Destruye confianza si alguien mira la pestaña Network y ve el 402."
+        }
+      ]
+    },
+    {
+      "id": "sarava-static",
+      "tag": "sarava",
+      "title": "Sitio comunitario sin presupuesto",
+      "prompt": "Saravá necesita hosting gratis, contenido que cambia poco, y diseño moderno. ¿Qué deploy elegís?",
+      "options": [
+        {
+          "id": "wordpress",
+          "label": "WordPress en hosting compartido",
+          "correct": false,
+          "feedback": "Funciona, pero tenías WordPress legacy. Next te da más control de diseño y performance."
+        },
+        {
+          "id": "static-export",
+          "label": "Next.js con output: export → GitHub Pages",
+          "correct": true,
+          "feedback": "Correcto. Desarrollás con React/TypeScript, pero producción son archivos estáticos gratis en docs/."
+        },
+        {
+          "id": "ssr-vercel",
+          "label": "SSR en Vercel con DB",
+          "correct": false,
+          "feedback": "Costo y complejidad sin beneficio para páginas mayormente informativas."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "pairs": [
+    {
+      "project": "mini-ecommerce",
+      "stack": "Next.js + Clerk + Redis",
+      "explain": "Tienda full-stack con auth real, carrito persistente y deploy en Vercel."
+    },
+    {
+      "project": "ia-stories",
+      "stack": "RAG + pgvector + AI SDK",
+      "explain": "Generador de historias con retrieval de corpus, streaming y fallback local."
+    },
+    {
+      "project": "mini-job-board",
+      "stack": "Vanilla JS + JSON",
+      "explain": "Tablero de empleos sin framework: filtros, localStorage y GitHub Pages."
+    },
+    {
+      "project": "portfolio",
+      "stack": "HTML/CSS + i18n",
+      "explain": "Showcase estático bilingüe sin build step — carga instantánea."
+    },
+    {
+      "project": "sarava",
+      "stack": "Next.js static export",
+      "explain": "Sitio comunitario exportado a HTML estático con contenido JSON en Git."
+    },
+    {
+      "project": "Clerk",
+      "stack": "Auth as a service",
+      "explain": "Maneja login, sesiones y middleware — no reinventás auth desde cero."
+    },
+    {
+      "project": "Vitest",
+      "stack": "Unit test runner",
+      "explain": "Tests rápidos en TypeScript/ESM — corre en CI antes del deploy."
+    },
+    {
+      "project": "Playwright",
+      "stack": "E2E testing",
+      "explain": "Simula un usuario real en el browser — detecta regresiones que unit tests no ven."
+    }
+  ]
+}

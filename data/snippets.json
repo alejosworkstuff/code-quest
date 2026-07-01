@@ -1,0 +1,60 @@
+{
+  "bugs": [
+    {
+      "id": "salary-regex",
+      "project": "mini-job-board",
+      "title": "Filtro de salario roto",
+      "hint1": "El regex busca el patrón de salario en el string.",
+      "hint2": "¿Cuántos matches de 'k' necesita parseSalaryMonthlyUsd?",
+      "hint3": "La línea 3 usa `< 2` pero debería ser `< 2` para requerir min Y max... revisá el operador.",
+      "bugLine": 3,
+      "lines": [
+        "function parseSalaryMonthlyUsd(salary) {",
+        "  const kMatches = [...salary.matchAll(/([\\d.]+)\\s*k/gi)];",
+        "  if (kMatches.length < 1) return null;  // ← bug aquí",
+        "  let min = parseFloat(kMatches[0][1]) * 1000;",
+        "  let max = parseFloat(kMatches[1][1]) * 1000;",
+        "  return { min, max };",
+        "}"
+      ],
+      "explanation": "Con `< 1` acepta salarios con un solo valor 'k'. El código real exige `< 2` matches para tener min y max."
+    },
+    {
+      "id": "filter-type",
+      "project": "mini-job-board",
+      "title": "Filtro de tipo incorrecto",
+      "hint1": "Comparás el tipo del job con el filtro seleccionado.",
+      "hint2": "¿Estás normalizando ambos lados igual?",
+      "hint3": "slugify convierte espacios a guiones — el filtro no lo usa.",
+      "bugLine": 4,
+      "lines": [
+        "function filterByType(jobs, selectedType) {",
+        "  if (selectedType === 'all') return jobs;",
+        "  return jobs.filter(job => {",
+        "    return job.type.toLowerCase() === selectedType;  // ← bug",
+        "  });",
+        "}",
+        "// Usuario elige 'remote' pero job.type es 'Remote'"
+      ],
+      "explanation": "Falta normalizar: slugify(job.type) === slugify(selectedType). 'Remote' !== 'remote' sin toLowerCase en ambos o slugify."
+    },
+    {
+      "id": "total-trust",
+      "project": "mini-ecommerce",
+      "title": "Checkout inseguro",
+      "hint1": "El total viene del body del request.",
+      "hint2": "¿Quién controla el body?",
+      "hint3": "El servidor debe recalcular, no confiar.",
+      "bugLine": 3,
+      "lines": [
+        "async function createOrder(req) {",
+        "  const body = await req.json();",
+        "  const total = body.total;  // ← bug",
+        "  await saveOrder({ items: body.items, total });",
+        "  return { ok: true };",
+        "}"
+      ],
+      "explanation": "Nunca confíes en body.total. Usá computeOrderTotal() comparando con el catálogo real."
+    }
+  ]
+}
