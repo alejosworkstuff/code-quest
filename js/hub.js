@@ -4,10 +4,10 @@ import {
   getWorldProgress,
   isWorldUnlocked,
   getBadges,
-  resetProgress,
   isGameCompleted,
   XP,
 } from "./progress.js";
+import { t, pick, onLangChange } from "./i18n.js";
 import "./sounds.js";
 
 const WORLD_COLORS = [
@@ -46,10 +46,10 @@ function animateValue(el, target, duration = 800) {
   const start = 0;
   const startTime = performance.now();
   function tick(now) {
-    const t = Math.min((now - startTime) / duration, 1);
-    const eased = 1 - (1 - t) ** 3;
+    const tVal = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - (1 - tVal) ** 3;
     el.textContent = Math.round(start + (target - start) * eased);
-    if (t < 1) requestAnimationFrame(tick);
+    if (tVal < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 }
@@ -65,22 +65,22 @@ function renderStats(state) {
     <div class="stat-card glass stat-card--xp animate-in">
       <span class="stat-card__icon">⚡</span>
       <div class="stat-value" data-target="${state.xp}">0</div>
-      <div class="stat-label">XP Total</div>
+      <div class="stat-label">${t("stats.xp")}</div>
     </div>
     <div class="stat-card glass stat-card--streak animate-in">
       <span class="stat-card__icon">🔥</span>
       <div class="stat-value" data-target="${state.streak}">0</div>
-      <div class="stat-label">Racha (días)</div>
+      <div class="stat-label">${t("stats.streak")}</div>
     </div>
     <div class="stat-card glass stat-card--badges animate-in">
       <span class="stat-card__icon">🏅</span>
       <div class="stat-value" data-target="${state.badges.length}">0</div>
-      <div class="stat-label">Badges</div>
+      <div class="stat-label">${t("stats.badges")}</div>
     </div>
     <div class="stat-card glass stat-card--games animate-in">
       <span class="stat-card__icon">🎮</span>
       <div class="stat-value" data-target="${completed}">0</div>
-      <div class="stat-label">Juegos (${completed}/${totalGames})</div>
+      <div class="stat-label">${t("stats.games", { done: completed, total: totalGames })}</div>
     </div>
   `;
 
@@ -112,6 +112,7 @@ function renderWorlds(data) {
       const icon = WORLD_ICONS[index] || "🌍";
       const isCurrent = unlocked && index === currentIdx && pct < 100;
       const delay = index * 0.08;
+      const projectLabel = pick(world.project);
 
       const gamesHtml = world.games
         .map((gameId) => {
@@ -137,19 +138,19 @@ function renderWorlds(data) {
       return `
         <article class="world-node ${unlocked ? "" : "world-node--locked"} ${isCurrent ? "world-node--current" : ""}"
                  style="--node-color:${color}; animation-delay:${delay}s">
-          <div class="world-node__marker" title="Mundo ${world.number}">${icon}</div>
+          <div class="world-node__marker" title="${t("map.world", { n: world.number })}">${icon}</div>
           <div class="world-node__card glass">
             <div class="world-card__header">
-              <span class="world-card__number" style="color:${color}">Mundo ${world.number}</span>
-              ${unlocked ? `<span class="badge-pill">${pct}%</span>` : `<span class="badge-pill badge-pill--locked">🔒 Bloqueado</span>`}
+              <span class="world-card__number" style="color:${color}">${t("map.world", { n: world.number })}</span>
+              ${unlocked ? `<span class="badge-pill">${pct}%</span>` : `<span class="badge-pill badge-pill--locked">${t("map.locked")}</span>`}
             </div>
-            <h2>${world.title}</h2>
-            <p>${world.description}</p>
+            <h2>${pick(world.title)}</h2>
+            <p>${pick(world.description)}</p>
             <div class="world-progress">
               <div class="world-progress__fill" style="width:${pct}%;background:${color}"></div>
             </div>
             <div class="world-games">${gamesHtml}</div>
-            <a class="project-link" href="${world.projectUrl}" target="_blank" rel="noopener">Ver ${world.project} →</a>
+            <a class="project-link" href="${world.projectUrl}" target="_blank" rel="noopener">${t("map.viewProject", { project: projectLabel })}</a>
           </div>
         </article>`;
     })
@@ -183,15 +184,10 @@ export async function initHub() {
   renderStats(state);
   renderWorlds(data);
   renderBadges(state);
-
-  document.getElementById("reset-progress")?.addEventListener("click", () => {
-    if (confirm("¿Resetear todo el progreso? Esto no se puede deshacer.")) {
-      resetProgress();
-      location.reload();
-    }
-  });
 }
 
 if (document.getElementById("worlds-grid")) {
   initHub();
+  onLangChange(() => initHub());
+  window.addEventListener("code-quest:lang-change", () => initHub());
 }

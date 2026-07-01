@@ -1,83 +1,79 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Code Quest — Aprendé Full-stack jugando</title>
-    <meta name="description" content="Plataforma interactiva para aprender programación full-stack con minijuegos basados en proyectos reales." />
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/tokens.css" />
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/animations.css" />
-    <link rel="stylesheet" href="css/hub.css" />
-  </head>
-  <body>
-    <canvas id="bg-canvas" aria-hidden="true"></canvas>
-
-    <div class="page-shell">
-      <header class="site-header animate-in">
-        <div class="logo">
-          <img class="logo__icon" src="assets/favicon.svg" alt="" width="36" height="36" />
-          Code <span>Quest</span>
-        </div>
-        <a class="btn btn-ghost btn-sm" href="https://alejosworkstuff.github.io/portfolio/" target="_blank" rel="noopener">Mi portfolio →</a>
-      </header>
-
-      <section class="hero-hub animate-in">
-        <div class="hero-hub__visual animate-float">
-          <div class="hero-hub__ring"></div>
-          <div class="hero-hub__orb">⚔️</div>
-        </div>
-        <p class="eyebrow">Aprendizaje interactivo</p>
-        <h1>Aprendé <em>Full-stack</em> jugando</h1>
-        <p>Cada minijuego enseña decisiones reales de tus proyectos. Sin PDFs aburridos — solo quests, XP y badges.</p>
-        <div class="hero-hub__cta">
-          <a class="btn btn-hero" href="games/filter-fighter.html">Empezar quest →</a>
-          <a class="btn btn-ghost" href="#quest-map">Ver mapa</a>
-        </div>
-      </section>
-
-      <div id="stats-bar" class="stats-bar"></div>
-
-      <section id="quest-map" class="quest-map-section animate-in">
-        <h2>Mapa del mundo</h2>
-        <p>Completá cada mundo para desbloquear el siguiente. 70% de progreso abre la puerta.</p>
-        <div class="quest-map">
-          <svg class="quest-map__svg" viewBox="0 0 400 1200" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#3dd6f5" />
-                <stop offset="35%" stop-color="#4ade80" />
-                <stop offset="55%" stop-color="#f472b6" />
-                <stop offset="75%" stop-color="#a78bfa" />
-                <stop offset="100%" stop-color="#fbbf24" />
-              </linearGradient>
-            </defs>
-            <path
-              class="quest-map__path"
-              d="M 200 60 C 320 120, 320 200, 200 260 C 80 320, 80 400, 200 460 C 320 520, 320 600, 200 660 C 80 720, 80 800, 200 860 C 320 920, 320 1000, 200 1060 C 120 1100, 120 1140, 200 1180"
-            />
-          </svg>
-          <div id="worlds-grid" class="quest-map__nodes"></div>
-        </div>
-      </section>
-
-      <section class="badges-section animate-in">
-        <h2>Trophies — Tus badges</h2>
-        <div id="badges-grid" class="badges-grid"></div>
-      </section>
-
-      <section class="settings-panel glass animate-in">
-        <h3>⚙️ Configuración</h3>
-        <p>El progreso se guarda en tu browser (localStorage). Sonidos activados — usá el botón 🔊 abajo a la izquierda para silenciarlos.</p>
-        <button id="reset-progress" type="button" class="btn btn-ghost btn-sm">Empezar de cero</button>
-      </section>
-    </div>
-
-    <script type="module" src="js/background.js"></script>
-    <script type="module" src="js/hub.js"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en" data-i18n-title="meta.title">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Code Quest — Learn Full-stack by playing</title>
+    <meta name="description" content="Interactive platform to learn full-stack development with minigames based on real projects." data-i18n="meta.description" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/hub.css" />
+  </head>
+  <body>
+    <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+    <div class="page-shell">
+      <header class="site-header animate-in">
+        <div class="logo">
+          <img class="logo__icon" src="assets/favicon.svg" alt="" width="36" height="36" />
+          Code <span>Quest</span>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="https://alejosworkstuff.github.io/portfolio/" target="_blank" rel="noopener" data-i18n="nav.portfolio">My portfolio →</a>
+      </header>
+
+      <section class="hero-hub animate-in">
+        <div class="hero-hub__visual animate-float">
+          <div class="hero-hub__ring"></div>
+          <div class="hero-hub__orb">⚔️</div>
+        </div>
+        <p class="eyebrow" data-i18n="hero.eyebrow">Interactive learning</p>
+        <h1><span data-i18n="hero.titleBefore">Learn </span><em data-i18n="hero.titleEm">Full-stack</em><span data-i18n="hero.titleAfter"> by playing</span></h1>
+        <p data-i18n="hero.body">Each minigame teaches real decisions from your projects. No boring PDFs — just quests, XP and badges.</p>
+        <div class="hero-hub__cta">
+          <a class="btn btn-hero" href="games/filter-fighter.html" data-i18n="hero.start">Start quest →</a>
+          <a class="btn btn-ghost" href="#quest-map" data-i18n="hero.map">View map</a>
+        </div>
+      </section>
+
+      <div id="stats-bar" class="stats-bar"></div>
+
+      <section id="quest-map" class="quest-map-section animate-in">
+        <h2 data-i18n="map.title">World map</h2>
+        <p data-i18n="map.body">Complete each world to unlock the next. 70% progress opens the door.</p>
+        <div class="quest-map">
+          <svg class="quest-map__svg" viewBox="0 0 400 1200" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#3dd6f5" />
+                <stop offset="35%" stop-color="#4ade80" />
+                <stop offset="55%" stop-color="#f472b6" />
+                <stop offset="75%" stop-color="#a78bfa" />
+                <stop offset="100%" stop-color="#fbbf24" />
+              </linearGradient>
+            </defs>
+            <path
+              class="quest-map__path"
+              d="M 200 60 C 320 120, 320 200, 200 260 C 80 320, 80 400, 200 460 C 320 520, 320 600, 200 660 C 80 720, 80 800, 200 860 C 320 920, 320 1000, 200 1060 C 120 1100, 120 1140, 200 1180"
+            />
+          </svg>
+          <div id="worlds-grid" class="quest-map__nodes"></div>
+        </div>
+      </section>
+
+      <section class="badges-section animate-in">
+        <h2 data-i18n="badges.title">Trophies — Your badges</h2>
+        <div id="badges-grid" class="badges-grid"></div>
+      </section>
+    </div>
+
+    <script type="module" src="js/i18n.js"></script>
+    <script type="module" src="js/settings.js"></script>
+    <script type="module" src="js/background.js"></script>
+    <script type="module" src="js/hub.js"></script>
+  </body>
+</html>

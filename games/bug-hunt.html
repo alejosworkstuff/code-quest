@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" data-game-id="bug-hunt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,18 +10,19 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/hub.css" />
   </head>
   <body>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="page-shell game-layout">
       <header class="game-header">
         <div>
-          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
-          <h1>Bug Hunt</h1>
-          <p>Click en la línea con el bug. Snippets simplificados de tus proyectos reales.</p>
+          <a href="../index.html" class="btn btn-ghost btn-sm" data-i18n="nav.hub">← Hub</a>
+          <h1 data-i18n="games.bug-hunt.title">Bug Hunt</h1>
+          <p data-i18n="games.bug-hunt.subtitle">Click the line with the bug. Simplified snippets from your real projects.</p>
         </div>
         <div class="game-meta">
-          <span class="badge-pill">Mundo 2</span>
+          <span class="badge-pill" data-i18n="games.bug-hunt.world">World 2</span>
         </div>
       </header>
       <p id="bug-progress" style="color:var(--muted);margin-bottom:8px"></p>
@@ -30,6 +31,8 @@
       <div id="bug-hints" style="margin:16px 0"></div>
       <div id="bug-feedback"></div>
     </div>
+    <script type="module" src="../js/i18n.js"></script>
+    <script type="module" src="../js/settings.js"></script>
     <script type="module" src="../js/background.js"></script>
     <script type="module" src="../js/games/bug-hunt.js"></script>
   </body>

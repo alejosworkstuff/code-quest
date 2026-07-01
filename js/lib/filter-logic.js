@@ -1,10 +1,10 @@
 const EUR_TO_USD = 1.08;
 
 export const SALARY_BANDS = {
-  "under-3k": { min: 0, max: 3000, label: "Menos de $3k/mes" },
-  "3k-5k": { min: 3000, max: 5000, label: "$3k – $5k/mes" },
-  "5k-8k": { min: 5000, max: 8000, label: "$5k – $8k/mes" },
-  "8k-plus": { min: 8000, max: Infinity, label: "Más de $8k/mes" },
+  "under-3k": { min: 0, max: 3000 },
+  "3k-5k": { min: 3000, max: 5000 },
+  "5k-8k": { min: 5000, max: 8000 },
+  "8k-plus": { min: 8000, max: Infinity },
 };
 
 export function slugify(value) {

@@ -1,6 +1,7 @@
 import { initProgress, completeGameLevel, completeGame, getGameProgress } from "../progress.js";
 import { showToast, showModal } from "../ui.js";
 import { playError } from "../sounds.js";
+import { t } from "../i18n.js";
 import {
   applyJobFilters,
   predictCount,
@@ -21,6 +22,14 @@ let filters = {
 const levelTabs = document.getElementById("level-tabs");
 const gameContent = document.getElementById("game-content");
 
+function salaryLabel(key) {
+  return t(`filter.salary.${key}`);
+}
+
+function jobsCountLabel(n) {
+  return n === 1 ? t("common.jobsFound", { n }) : t("common.jobsFoundPlural", { n });
+}
+
 async function loadJobs() {
   const res = await fetch("../data/jobs-sample.json");
   jobs = await res.json();
@@ -32,7 +41,7 @@ function renderLevelTabs() {
     .map((n) => {
       const done = progress.levels.includes(`level-${n}`);
       const active = n === currentLevel;
-      return `<button type="button" class="level-tab ${active ? "level-tab--active" : ""} ${done ? "level-tab--done" : ""}" data-level="${n}">Nivel ${n}${done ? " ✓" : ""}</button>`;
+      return `<button type="button" class="level-tab ${active ? "level-tab--active" : ""} ${done ? "level-tab--done" : ""}" data-level="${n}">${t("common.level", { n })}${done ? " ✓" : ""}</button>`;
     })
     .join("");
 
@@ -46,10 +55,10 @@ function renderLevelTabs() {
 
 function renderJobsList(list) {
   if (!list.length) {
-    return `<p class="jobs-count">0 empleos encontrados — probá otros filtros.</p>`;
+    return `<p class="jobs-count">${t("common.noJobs")}</p>`;
   }
   return `
-    <p class="jobs-count">${list.length} empleo${list.length === 1 ? "" : "s"} encontrado${list.length === 1 ? "" : "s"}</p>
+    <p class="jobs-count">${jobsCountLabel(list.length)}</p>
     <div class="jobs-list">
       ${list
         .map(
@@ -70,22 +79,22 @@ function renderLevel1() {
     <div class="filter-fighter-grid">
       <aside class="filter-panel glass">
         <div class="filter-group">
-          <label for="search">Buscar</label>
+          <label for="search">${t("common.search")}</label>
           <input id="search" type="search" placeholder="React, company..." />
         </div>
         <div class="filter-group">
-          <label for="type">Tipo</label>
+          <label for="type">${t("common.type")}</label>
           <select id="type">
-            <option value="all">Todos</option>
+            <option value="all">${t("common.all")}</option>
             <option value="Remote">Remote</option>
             <option value="Hybrid">Hybrid</option>
             <option value="Onsite">Onsite</option>
           </select>
         </div>
         <div class="filter-group">
-          <label for="seniority">Seniority</label>
+          <label for="seniority">${t("common.seniority")}</label>
           <select id="seniority">
-            <option value="all">Todos</option>
+            <option value="all">${t("common.all")}</option>
             <option value="Trainee">Trainee</option>
             <option value="Junior">Junior</option>
             <option value="Semi-Senior">Semi-Senior</option>
@@ -93,19 +102,19 @@ function renderLevel1() {
           </select>
         </div>
         <div class="filter-group">
-          <label for="salary">Salario</label>
+          <label for="salary">${t("common.salary")}</label>
           <select id="salary">
-            <option value="all">Todos</option>
-            ${Object.entries(SALARY_BANDS)
-              .map(([k, v]) => `<option value="${k}">${v.label}</option>`)
+            <option value="all">${t("common.all")}</option>
+            ${Object.keys(SALARY_BANDS)
+              .map((k) => `<option value="${k}">${salaryLabel(k)}</option>`)
               .join("")}
           </select>
         </div>
       </aside>
       <section class="jobs-panel glass" id="jobs-panel"></section>
     </div>
-    <p class="feedback-box" style="margin-top:16px">💡 <strong>Nivel 1:</strong> Mové los filtros y observá cuántos empleos quedan. Esto es lo que hace <code>mini-job-board</code> en vivo.</p>
-    <button type="button" class="btn btn-sm" id="complete-level-1" style="margin-top:12px">Completar nivel 1</button>
+    <p class="feedback-box" style="margin-top:16px">💡 ${t("filter.level1Tip")}</p>
+    <button type="button" class="btn btn-sm" id="complete-level-1" style="margin-top:12px">${t("common.completeLevel", { n: 1 })}</button>
   `;
 
   const panel = document.getElementById("jobs-panel");
@@ -130,7 +139,7 @@ function renderLevel1() {
   document.getElementById("complete-level-1")?.addEventListener("click", () => {
     if (getGameProgress(GAME_ID).levels.includes("level-1")) return;
     completeGameLevel(GAME_ID, "level-1");
-    showToast("Nivel 1 completado — +10 XP", "success");
+    showToast(t("common.levelDone", { n: 1 }), "success");
     renderLevelTabs();
   });
 }
@@ -146,7 +155,7 @@ function renderLevel2() {
 
   gameContent.innerHTML = `
     <div class="glass" style="padding:24px">
-      <p><strong>Misión:</strong> Sin aplicar filtros todavía — ¿cuántos empleos quedan con <em>Remote + Senior</em>?</p>
+      <p><strong>${t("common.mission")}:</strong> ${t("filter.level2Mission")}</p>
       <div class="code-preview">
         <span class="fn">applyJobFilters</span>(jobs, {<br/>
         &nbsp;&nbsp;selectedType: <span class="str">"Remote"</span>,<br/>
@@ -158,7 +167,7 @@ function renderLevel2() {
           .filter((v, i, arr) => arr.indexOf(v) === i)
           .sort(() => Math.random() - 0.5)
           .map(
-            (n) => `<button type="button" class="quiz-option" data-answer="${n}">${n} empleos</button>`
+            (n) => `<button type="button" class="quiz-option" data-answer="${n}">${t("common.jobsCount", { n })}</button>`
           )
           .join("")}
       </div>
@@ -173,14 +182,14 @@ function renderLevel2() {
     const fb = document.getElementById("level2-feedback");
     if (answer === expected) {
       btn.classList.add("quiz-option--correct");
-      fb.innerHTML = `<div class="feedback-box"><p>✓ Correcto. <code>filter-logic.mjs</code> es una función pura: misma entrada → misma salida, sin tocar el DOM.</p></div>`;
+      fb.innerHTML = `<div class="feedback-box"><p>✓ ${t("filter.level2Correct")}</p></div>`;
       completeGameLevel(GAME_ID, "level-2");
-      showToast("Nivel 2 completado — +10 XP", "success");
+      showToast(t("common.levelDone", { n: 2 }), "success");
       renderLevelTabs();
     } else {
       btn.classList.add("quiz-option--wrong");
       playError();
-      fb.innerHTML = `<div class="feedback-box"><p>Casi — la respuesta era <strong>${expected}</strong>. Tip: filtrá Remote y Senior en el Nivel 1 para verificar.</p></div>`;
+      fb.innerHTML = `<div class="feedback-box"><p>${t("filter.level2Wrong", { n: expected })}</p></div>`;
     }
   });
 }
@@ -191,14 +200,14 @@ function renderLevel3() {
 
   gameContent.innerHTML = `
     <div class="glass" style="padding:24px">
-      <p><strong>Puzzle de salario:</strong> ¿Qué banda mensual en USD matchea este string?</p>
+      <p><strong>${t("filter.level3Title")}</strong></p>
       <div class="code-preview"><span class="str">"${salary}"</span></div>
-      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:16px">Pista: es anual (÷12) y en euros (×1.08). El código real está en <code>filter-logic.mjs</code>.</p>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:16px">${t("filter.level3Hint")}</p>
       <div class="quiz-options" id="quiz-options">
-        ${Object.entries(SALARY_BANDS)
+        ${Object.keys(SALARY_BANDS)
           .map(
-            ([key, band]) =>
-              `<button type="button" class="quiz-option" data-band="${key}">${band.label}</button>`
+            (key) =>
+              `<button type="button" class="quiz-option" data-band="${key}">${salaryLabel(key)}</button>`
           )
           .join("")}
       </div>
@@ -214,12 +223,12 @@ function renderLevel3() {
 
     if (band === correctBand) {
       btn.classList.add("quiz-option--correct");
-      fb.innerHTML = `<div class="feedback-box"><p>✓ Correcto (~$4k–$5k/mes USD). Por eso extraemos la lógica a un módulo testeado — un bug de salario rompe filtros silenciosamente.</p></div>`;
+      fb.innerHTML = `<div class="feedback-box"><p>✓ ${t("filter.level3Correct")}</p></div>`;
       completeGameLevel(GAME_ID, "level-3");
       completeGame(GAME_ID);
       showModal({
-        title: "¡Filter Fighter completado!",
-        body: "Dominaste filtros, funciones puras y parsing de salarios.",
+        title: t("filter.doneTitle"),
+        body: t("filter.doneBody"),
         xp: 25,
         badge: { icon: "🔍", name: "Filter Mage" },
       });
@@ -227,7 +236,7 @@ function renderLevel3() {
     } else {
       btn.classList.add("quiz-option--wrong");
       playError();
-      fb.innerHTML = `<div class="feedback-box"><p>No es esa banda. Convertí: 45k–55k anual EUR → mensual USD y compará con los rangos.</p></div>`;
+      fb.innerHTML = `<div class="feedback-box"><p>${t("filter.level3Wrong")}</p></div>`;
     }
   });
 }
@@ -246,3 +255,4 @@ async function init() {
 }
 
 init();
+window.addEventListener("code-quest:lang-change", () => renderLevel());

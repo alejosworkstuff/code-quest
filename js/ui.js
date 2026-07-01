@@ -1,4 +1,5 @@
 import { playSuccess, playError, playVictory, playLevelUp } from "./sounds.js";
+import { t } from "./i18n.js";
 
 let toastContainer = null;
 
@@ -53,7 +54,7 @@ export function showModal({ title, body, xp, badge, onClose }) {
       <p>${body}</p>
       ${xp ? `<div class="xp-burst">+${xp} XP</div>` : ""}
       ${badge ? `<span class="badge-pill badge-pill--earned" style="margin-top:8px">${badge.icon} ${badge.name}</span>` : ""}
-      <button type="button" class="btn btn-hero" style="margin-top:24px">Continuar</button>
+      <button type="button" class="btn btn-hero" style="margin-top:24px">${t("common.continue")}</button>
     </div>
   `;
 

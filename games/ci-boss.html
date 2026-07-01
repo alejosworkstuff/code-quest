@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" data-game-id="ci-boss">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,18 +10,19 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/hub.css" />
   </head>
   <body>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="page-shell game-layout">
       <header class="game-header">
         <div>
-          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
-          <h1>CI Boss Fight</h1>
-          <p>El robot teacher (CI pipeline) falló. ¿Cómo lo arreglás sin hacer trampa?</p>
+          <a href="../index.html" class="btn btn-ghost btn-sm" data-i18n="nav.hub">← Hub</a>
+          <h1 data-i18n="games.ci-boss.title">CI Boss Fight</h1>
+          <p data-i18n="games.ci-boss.subtitle">The robot teacher (CI pipeline) failed. How do you fix it without cheating?</p>
         </div>
         <div class="game-meta">
-          <span class="badge-pill">Mundo 7</span>
+          <span class="badge-pill" data-i18n="games.ci-boss.world">World 7</span>
         </div>
       </header>
       <div id="ci-pipeline" class="ci-pipeline"></div>
@@ -29,6 +30,8 @@
       <div id="ci-options" class="quiz-options"></div>
       <div id="ci-feedback"></div>
     </div>
+    <script type="module" src="../js/i18n.js"></script>
+    <script type="module" src="../js/settings.js"></script>
     <script type="module" src="../js/background.js"></script>
     <script type="module" src="../js/games/ci-boss.js"></script>
   </body>

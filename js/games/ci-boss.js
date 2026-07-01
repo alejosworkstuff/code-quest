@@ -1,54 +1,15 @@
 import { initProgress, completeGameLevel, completeGame, getGameProgress } from "../progress.js";
 import { showModal, showToast } from "../ui.js";
 import { playError } from "../sounds.js";
+import { t } from "../i18n.js";
 
 const GAME_ID = "ci-boss";
 
 const STAGES = [
-  {
-    id: "lint",
-    name: "Lint",
-    failMsg: "ESLint encontró errores de estilo.",
-    fixes: [
-      { id: "fix", label: "Corregir los errores que reporta ESLint", correct: true },
-      { id: "skip", label: "Agregar eslint-disable en todo el archivo", correct: false },
-      { id: "delete", label: "Borrar el workflow de CI", correct: false },
-    ],
-    wrongFeedback: "eslint-disable esconde problemas. El robot teacher quiere código limpio, no silencio.",
-  },
-  {
-    id: "typecheck",
-    name: "Type-check",
-    failMsg: "TypeScript strict: Property 'foo' does not exist.",
-    fixes: [
-      { id: "any", label: "Castear todo a any", correct: false },
-      { id: "fix", label: "Tipar correctamente o ajustar el interface", correct: true },
-      { id: "ignore", label: "Desactivar strict en tsconfig", correct: false },
-    ],
-    wrongFeedback: "strict: true existe por algo. Arreglá el tipo, no lo apagues.",
-  },
-  {
-    id: "test",
-    name: "Test",
-    failMsg: "Vitest: expected 3 but received 2.",
-    fixes: [
-      { id: "fix", label: "Revisar la assertion o el código bajo test", correct: true },
-      { id: "delete", label: "Borrar el test que falla", correct: false },
-      { id: "skip", label: "Marcar test como skip permanente", correct: false },
-    ],
-    wrongFeedback: "Un test roto puede ser señal de un bug real. Fix > skip.",
-  },
-  {
-    id: "build",
-    name: "Build",
-    failMsg: "next build failed: Module not found.",
-    fixes: [
-      { id: "fix", label: "Corregir el import o instalar la dependencia", correct: true },
-      { id: "push", label: "Push igual — funciona en mi máquina", correct: false },
-      { id: "disable", label: "Quitar el step de build del CI", correct: false },
-    ],
-    wrongFeedback: "Si build falla en CI, producción también puede fallar.",
-  },
+  { id: "lint", name: "Lint", correctFix: "fix", fixIds: ["fix", "skip", "delete"] },
+  { id: "typecheck", name: "Type-check", correctFix: "fix", fixIds: ["any", "fix", "ignore"] },
+  { id: "test", name: "Test", correctFix: "fix", fixIds: ["fix", "delete", "skip"] },
+  { id: "build", name: "Build", correctFix: "fix", fixIds: ["fix", "push", "disable"] },
 ];
 
 let currentStage = 0;
@@ -56,6 +17,18 @@ const pipelineEl = document.getElementById("ci-pipeline");
 const scenarioEl = document.getElementById("ci-scenario");
 const optionsEl = document.getElementById("ci-options");
 const feedbackEl = document.getElementById("ci-feedback");
+
+function stageFailMsg(stage) {
+  return t(`ciBoss.stages.${stage.id}.failMsg`);
+}
+
+function fixLabel(stage, fixId) {
+  return t(`ciBoss.stages.${stage.id}.fixes.${fixId}`);
+}
+
+function stageWrongFeedback(stage) {
+  return t(`ciBoss.stages.${stage.id}.wrongFeedback`);
+}
 
 function renderPipeline() {
   pipelineEl.innerHTML = STAGES.map((s, i) => {
@@ -72,13 +45,13 @@ function renderStage() {
 
   renderPipeline();
   scenarioEl.innerHTML = `
-    <p>🤖 <strong>Robot teacher:</strong> El stage <em>${stage.name}</em> falló.</p>
-    <p style="margin-top:8px;color:var(--danger)">${stage.failMsg}</p>
-    <p style="margin-top:12px;color:var(--muted)">¿Qué hacés?</p>
+    <p>🤖 <strong>${t("ciBoss.robotTeacher", { name: stage.name })}</strong></p>
+    <p style="margin-top:8px;color:var(--danger)">${stageFailMsg(stage)}</p>
+    <p style="margin-top:12px;color:var(--muted)">${t("ciBoss.whatDo")}</p>
   `;
 
-  optionsEl.innerHTML = stage.fixes
-    .map((f) => `<button type="button" class="quiz-option" data-fix="${f.id}">${f.label}</button>`)
+  optionsEl.innerHTML = stage.fixIds
+    .map((fixId) => `<button type="button" class="quiz-option" data-fix="${fixId}">${fixLabel(stage, fixId)}</button>`)
     .join("");
 
   feedbackEl.innerHTML = "";
@@ -86,34 +59,36 @@ function renderStage() {
 
 function handleFix(fixId) {
   const stage = STAGES[currentStage];
-  const fix = stage.fixes.find((f) => f.id === fixId);
+  const correct = fixId === stage.correctFix;
 
   optionsEl.querySelectorAll(".quiz-option").forEach((btn) => {
     btn.disabled = true;
-    const f = stage.fixes.find((x) => x.id === btn.dataset.fix);
-    if (f?.correct) btn.classList.add("quiz-option--correct");
-    else if (btn.dataset.fix === fixId) btn.classList.add("quiz-option--wrong");
+    const id = btn.dataset.fix;
+    if (id === stage.correctFix) btn.classList.add("quiz-option--correct");
+    else if (id === fixId) btn.classList.add("quiz-option--wrong");
   });
 
-  if (fix.correct) {
-    feedbackEl.innerHTML = `<div class="feedback-box"><p>✓ Stage ${stage.name} pasa. El CI pipeline protege calidad antes del deploy.</p>
-      <button type="button" class="btn" style="margin-top:12px" id="next-stage">${currentStage < STAGES.length - 1 ? "Siguiente stage →" : "Derrotar al boss"}</button></div>`;
+  if (correct) {
+    const nextLabel =
+      currentStage < STAGES.length - 1 ? t("ciBoss.nextStage") : t("ciBoss.defeatBoss");
+    feedbackEl.innerHTML = `<div class="feedback-box"><p>✓ ${t("ciBoss.stagePass", { name: stage.name })}</p>
+      <button type="button" class="btn" style="margin-top:12px" id="next-stage">${nextLabel}</button></div>`;
     completeGameLevel(GAME_ID, stage.id);
-    showToast(`Stage ${stage.name} resuelto — +10 XP`, "success");
+    showToast(t("ciBoss.stageResolved", { name: stage.name }), "success");
   } else {
     playError();
-    feedbackEl.innerHTML = `<div class="feedback-box"><p>✗ ${stage.wrongFeedback}</p></div>`;
+    feedbackEl.innerHTML = `<div class="feedback-box"><p>✗ ${stageWrongFeedback(stage)}</p></div>`;
   }
 
   document.getElementById("next-stage")?.addEventListener("click", () => {
-    if (!fix.correct) return;
+    if (!correct) return;
     currentStage += 1;
     if (currentStage >= STAGES.length) {
       if (!getGameProgress(GAME_ID).completed) {
         completeGame(GAME_ID);
         showModal({
-          title: "¡CI Boss derrotado!",
-          body: "Lint → typecheck → test → build. Así funciona tu CI en todos los repos.",
+          title: t("ciBoss.doneTitle"),
+          body: t("ciBoss.doneBody"),
           xp: 25,
           badge: { icon: "🤖", name: "CI Slayer" },
         });
@@ -136,3 +111,4 @@ function init() {
 }
 
 init();
+window.addEventListener("code-quest:lang-change", () => renderStage());

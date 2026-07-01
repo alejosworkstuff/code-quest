@@ -1,6 +1,7 @@
 import { initProgress, completeGameLevel, completeGame, getGameProgress } from "../progress.js";
 import { showModal, showToast } from "../ui.js";
 import { playError } from "../sounds.js";
+import { t, pick } from "../i18n.js";
 
 const GAME_ID = "bug-hunt";
 let bugs = [];
@@ -23,8 +24,8 @@ function renderBug() {
   const bug = bugs[currentIndex];
   if (!bug) return;
 
-  titleEl.textContent = `${bug.project}: ${bug.title}`;
-  progressEl.textContent = `Bug ${currentIndex + 1} / ${bugs.length}`;
+  titleEl.textContent = `${bug.project}: ${pick(bug.title)}`;
+  progressEl.textContent = t("bugHunt.bugProgress", { current: currentIndex + 1, total: bugs.length });
 
   snippetEl.innerHTML = bug.lines
     .map((line, i) => {
@@ -33,7 +34,8 @@ function renderBug() {
     })
     .join("");
 
-  hintsEl.innerHTML = `<button type="button" class="btn btn-ghost btn-sm" id="hint-btn">Pista (${3 - hintsUsed} restantes)</button>`;
+  const hintsLeft = 3 - hintsUsed;
+  hintsEl.innerHTML = `<button type="button" class="btn btn-ghost btn-sm" id="hint-btn">${t("bugHunt.hint", { n: hintsLeft })}</button>`;
   feedbackEl.innerHTML = "";
 
   snippetEl.querySelectorAll(".bug-line").forEach((el) => {
@@ -54,12 +56,14 @@ function showHint() {
   const bug = bugs[currentIndex];
   hintsUsed += 1;
   const hintKey = `hint${Math.min(hintsUsed, 3)}`;
-  const hint = bug[hintKey];
+  const hint = pick(bug[hintKey]);
   if (hint) {
     feedbackEl.innerHTML = `<div class="feedback-box"><p>💡 ${hint}</p></div>`;
   }
   if (hintsUsed >= 3) {
     document.getElementById("hint-btn").disabled = true;
+  } else {
+    document.getElementById("hint-btn").textContent = t("bugHunt.hint", { n: 3 - hintsUsed });
   }
 }
 
@@ -71,10 +75,12 @@ function guessLine(lineNum) {
 
   if (lineNum === bug.bugLine) {
     lines[lineNum - 1].classList.add("bug-line--correct");
-    feedbackEl.innerHTML = `<div class="feedback-box"><p>✓ ${bug.explanation}</p>
-      <button type="button" class="btn" style="margin-top:12px" id="next-bug">${currentIndex < bugs.length - 1 ? "Siguiente bug →" : "Completar"}</button></div>`;
+    const nextLabel =
+      currentIndex < bugs.length - 1 ? t("bugHunt.nextBug") : t("common.complete");
+    feedbackEl.innerHTML = `<div class="feedback-box"><p>✓ ${pick(bug.explanation)}</p>
+      <button type="button" class="btn" style="margin-top:12px" id="next-bug">${nextLabel}</button></div>`;
     completeGameLevel(GAME_ID, bug.id);
-    showToast("Bug encontrado — +10 XP", "success");
+    showToast(t("bugHunt.found"), "success");
 
     document.getElementById("next-bug").addEventListener("click", () => {
       currentIndex += 1;
@@ -83,8 +89,8 @@ function guessLine(lineNum) {
         if (!getGameProgress(GAME_ID).completed) {
           completeGame(GAME_ID);
           showModal({
-            title: "¡Bug Hunt completado!",
-            body: "Encontraste bugs reales de salario, filtros y checkout.",
+            title: t("bugHunt.doneTitle"),
+            body: t("bugHunt.doneBody"),
             xp: 25,
             badge: { icon: "🐛", name: "Bug Buster" },
           });
@@ -96,7 +102,7 @@ function guessLine(lineNum) {
   } else {
     lines[lineNum - 1].classList.add("bug-line--selected");
     playError();
-    feedbackEl.innerHTML = `<div class="feedback-box"><p>No es esa línea. Usá una pista si necesitás.</p></div>`;
+    feedbackEl.innerHTML = `<div class="feedback-box"><p>${t("bugHunt.wrongLine")}</p></div>`;
   }
 }
 
@@ -107,3 +113,4 @@ async function init() {
 }
 
 init();
+window.addEventListener("code-quest:lang-change", () => renderBug());

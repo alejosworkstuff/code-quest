@@ -3,29 +3,56 @@
     {
       "id": "salary-regex",
       "project": "mini-job-board",
-      "title": "Filtro de salario roto",
-      "hint1": "El regex busca el patrón de salario en el string.",
-      "hint2": "¿Cuántos matches de 'k' necesita parseSalaryMonthlyUsd?",
-      "hint3": "La línea 3 usa `< 2` pero debería ser `< 2` para requerir min Y max... revisá el operador.",
+      "title": {
+        "en": "Broken salary filter",
+        "es": "Filtro de salario roto"
+      },
+      "hint1": {
+        "en": "The regex searches for the salary pattern in the string.",
+        "es": "El regex busca el patrón de salario en el string."
+      },
+      "hint2": {
+        "en": "How many 'k' matches does parseSalaryMonthlyUsd need?",
+        "es": "¿Cuántos matches de 'k' necesita parseSalaryMonthlyUsd?"
+      },
+      "hint3": {
+        "en": "Line 3 uses `< 1` but should require min AND max — check the operator.",
+        "es": "La línea 3 usa `< 1` pero debería requerir min Y max... revisá el operador."
+      },
       "bugLine": 3,
       "lines": [
         "function parseSalaryMonthlyUsd(salary) {",
         "  const kMatches = [...salary.matchAll(/([\\d.]+)\\s*k/gi)];",
-        "  if (kMatches.length < 1) return null;  // ← bug aquí",
+        "  if (kMatches.length < 1) return null;  // ← bug here",
         "  let min = parseFloat(kMatches[0][1]) * 1000;",
         "  let max = parseFloat(kMatches[1][1]) * 1000;",
         "  return { min, max };",
         "}"
       ],
-      "explanation": "Con `< 1` acepta salarios con un solo valor 'k'. El código real exige `< 2` matches para tener min y max."
+      "explanation": {
+        "en": "With `< 1` it accepts salaries with a single 'k' value. The real code requires `< 2` matches to have min and max.",
+        "es": "Con `< 1` acepta salarios con un solo valor 'k'. El código real exige `< 2` matches para tener min y max."
+      }
     },
     {
       "id": "filter-type",
       "project": "mini-job-board",
-      "title": "Filtro de tipo incorrecto",
-      "hint1": "Comparás el tipo del job con el filtro seleccionado.",
-      "hint2": "¿Estás normalizando ambos lados igual?",
-      "hint3": "slugify convierte espacios a guiones — el filtro no lo usa.",
+      "title": {
+        "en": "Wrong type filter",
+        "es": "Filtro de tipo incorrecto"
+      },
+      "hint1": {
+        "en": "You compare the job type with the selected filter.",
+        "es": "Comparás el tipo del job con el filtro seleccionado."
+      },
+      "hint2": {
+        "en": "Are you normalizing both sides the same way?",
+        "es": "¿Estás normalizando ambos lados igual?"
+      },
+      "hint3": {
+        "en": "slugify converts spaces to dashes — the filter doesn't use it.",
+        "es": "slugify convierte espacios a guiones — el filtro no lo usa."
+      },
       "bugLine": 4,
       "lines": [
         "function filterByType(jobs, selectedType) {",
@@ -34,17 +61,32 @@
         "    return job.type.toLowerCase() === selectedType;  // ← bug",
         "  });",
         "}",
-        "// Usuario elige 'remote' pero job.type es 'Remote'"
+        "// User picks 'remote' but job.type is 'Remote'"
       ],
-      "explanation": "Falta normalizar: slugify(job.type) === slugify(selectedType). 'Remote' !== 'remote' sin toLowerCase en ambos o slugify."
+      "explanation": {
+        "en": "Missing normalization: slugify(job.type) === slugify(selectedType). 'Remote' !== 'remote' without toLowerCase on both or slugify.",
+        "es": "Falta normalizar: slugify(job.type) === slugify(selectedType). 'Remote' !== 'remote' sin toLowerCase en ambos o slugify."
+      }
     },
     {
       "id": "total-trust",
       "project": "mini-ecommerce",
-      "title": "Checkout inseguro",
-      "hint1": "El total viene del body del request.",
-      "hint2": "¿Quién controla el body?",
-      "hint3": "El servidor debe recalcular, no confiar.",
+      "title": {
+        "en": "Insecure checkout",
+        "es": "Checkout inseguro"
+      },
+      "hint1": {
+        "en": "The total comes from the request body.",
+        "es": "El total viene del body del request."
+      },
+      "hint2": {
+        "en": "Who controls the body?",
+        "es": "¿Quién controla el body?"
+      },
+      "hint3": {
+        "en": "The server must recalculate, not trust.",
+        "es": "El servidor debe recalcular, no confiar."
+      },
       "bugLine": 3,
       "lines": [
         "async function createOrder(req) {",
@@ -54,7 +96,10 @@
         "  return { ok: true };",
         "}"
       ],
-      "explanation": "Nunca confíes en body.total. Usá computeOrderTotal() comparando con el catálogo real."
+      "explanation": {
+        "en": "Never trust body.total. Use computeOrderTotal() comparing against the real catalog.",
+        "es": "Nunca confíes en body.total. Usá computeOrderTotal() comparando con el catálogo real."
+      }
     }
   ]
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" data-game-id="auth-gate">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,18 +10,19 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/hub.css" />
   </head>
   <body>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="page-shell game-layout">
       <header class="game-header">
         <div>
-          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
-          <h1>Auth Gate</h1>
-          <p>Probá guest, user y admin. ¿Qué rutas puede ver cada uno?</p>
+          <a href="../index.html" class="btn btn-ghost btn-sm" data-i18n="nav.hub">← Hub</a>
+          <h1 data-i18n="games.auth-gate.title">Auth Gate</h1>
+          <p data-i18n="games.auth-gate.subtitle">Try guest, user and admin. Which routes can each one see?</p>
         </div>
         <div class="game-meta">
-          <span class="badge-pill">Mundo 5</span>
+          <span class="badge-pill" data-i18n="games.auth-gate.world">World 5</span>
           <span class="badge-pill">Clerk</span>
         </div>
       </header>
@@ -33,6 +34,8 @@
         </div>
       </div>
     </div>
+    <script type="module" src="../js/i18n.js"></script>
+    <script type="module" src="../js/settings.js"></script>
     <script type="module" src="../js/background.js"></script>
     <script type="module" src="../js/games/auth-gate.js"></script>
   </body>

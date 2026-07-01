@@ -1,5 +1,6 @@
 import { initProgress, completeGameLevel, completeGame, getGameProgress } from "../progress.js";
 import { showModal, showToast } from "../ui.js";
+import { t, pick } from "../i18n.js";
 
 const GAME_ID = "decision-dungeon";
 let scenarios = [];
@@ -33,14 +34,14 @@ function renderScenario() {
 
   scenarioEl.innerHTML = `
     <span class="scenario-tag">${s.tag}</span>
-    <h2>${s.title}</h2>
-    <blockquote>${s.prompt}</blockquote>
+    <h2>${pick(s.title)}</h2>
+    <blockquote>${pick(s.prompt)}</blockquote>
   `;
 
   optionsEl.innerHTML = s.options
     .map(
       (opt) =>
-        `<button type="button" class="quiz-option" data-option="${opt.id}">${opt.label}</button>`
+        `<button type="button" class="quiz-option" data-option="${opt.id}">${pick(opt.label)}</button>`
     )
     .join("");
 
@@ -61,18 +62,21 @@ function handleOption(optionId) {
     else if (id === optionId) btn.classList.add("quiz-option--wrong");
   });
 
+  const nextLabel =
+    currentIndex < scenarios.length - 1 ? t("decision.nextScenario") : t("decision.completeDungeon");
+
   feedbackEl.innerHTML = `
     <div class="feedback-box">
-      <p>${opt.correct ? "✓" : "✗"} ${opt.feedback}</p>
+      <p>${opt.correct ? "✓" : "✗"} ${pick(opt.feedback)}</p>
       <button type="button" class="btn" style="margin-top:16px" id="next-scenario">
-        ${currentIndex < scenarios.length - 1 ? "Siguiente escenario →" : "Completar dungeon"}
+        ${nextLabel}
       </button>
     </div>
   `;
 
   completeGameLevel(GAME_ID, s.id);
   showToast(
-    opt.correct ? "+10 XP — buena decisión" : "Revisá el feedback — cada error enseña",
+    opt.correct ? t("common.xpGood") : t("common.xpReview"),
     opt.correct ? "success" : "error"
   );
 
@@ -82,8 +86,8 @@ function handleOption(optionId) {
       if (!getGameProgress(GAME_ID).completed) {
         completeGame(GAME_ID);
         showModal({
-          title: "¡Decision Dungeon completado!",
-          body: "Ahora podés explicar por qué elegimos Redis, Clerk, SSG y más.",
+          title: t("decision.doneTitle"),
+          body: t("decision.doneBody"),
           xp: 25,
           badge: { icon: "⚔️", name: "Architect" },
         });
@@ -107,3 +111,4 @@ async function init() {
 }
 
 init();
+window.addEventListener("code-quest:lang-change", () => renderScenario());

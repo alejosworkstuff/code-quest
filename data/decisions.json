@@ -3,208 +3,400 @@
     {
       "id": "redis-vs-map",
       "tag": "mini-ecommerce",
-      "title": "Pedidos en Vercel serverless",
-      "prompt": "Creaste un pedido en la instancia A del servidor. El usuario consulta sus compras y cae en la instancia B. El pedido desapareció. ¿Qué storage elegís para guardar pedidos?",
+      "title": {
+        "en": "Orders on Vercel serverless",
+        "es": "Pedidos en Vercel serverless"
+      },
+      "prompt": {
+        "en": "You created an order on server instance A. The user checks their purchases and lands on instance B. The order vanished. What storage do you choose to persist orders?",
+        "es": "Creaste un pedido en la instancia A del servidor. El usuario consulta sus compras y cae en la instancia B. El pedido desapareció. ¿Qué storage elegís para guardar pedidos?"
+      },
       "options": [
         {
           "id": "map",
-          "label": "Map en memoria (JavaScript)",
+          "label": {
+            "en": "In-memory Map (JavaScript)",
+            "es": "Map en memoria (JavaScript)"
+          },
           "correct": false,
-          "feedback": "Un Map vive solo en una instancia. En serverless cada request puede ir a otra máquina — el pedido se pierde entre instancias."
+          "feedback": {
+            "en": "A Map lives only on one instance. In serverless, each request can hit a different machine — the order is lost between instances.",
+            "es": "Un Map vive solo en una instancia. En serverless cada request puede ir a otra máquina — el pedido se pierde entre instancias."
+          }
         },
         {
           "id": "redis",
-          "label": "Redis con fallback a Map en local",
+          "label": {
+            "en": "Redis with Map fallback locally",
+            "es": "Redis con fallback a Map en local"
+          },
           "correct": true,
-          "feedback": "Correcto. Redis centraliza datos entre todas las instancias. En local, el Map te deja desarrollar sin pagar Redis."
+          "feedback": {
+            "en": "Correct. Redis centralizes data across all instances. Locally, the Map lets you develop without paying for Redis.",
+            "es": "Correcto. Redis centraliza datos entre todas las instancias. En local, el Map te deja desarrollar sin pagar Redis."
+          }
         },
         {
           "id": "postgres",
-          "label": "Postgres desde el día 1",
+          "label": {
+            "en": "Postgres from day one",
+            "es": "Postgres desde el día 1"
+          },
           "correct": false,
-          "feedback": "Postgres es la opción seria en producción real, pero para este demo sumaría semanas (migraciones, ORM). Redis cubre el problema de instancias sin overkill."
+          "feedback": {
+            "en": "Postgres is the serious choice in real production, but for this demo it would add weeks (migrations, ORM). Redis covers the multi-instance problem without overkill.",
+            "es": "Postgres es la opción seria en producción real, pero para este demo sumaría semanas (migraciones, ORM). Redis cubre el problema de instancias sin overkill."
+          }
         }
       ]
     },
     {
       "id": "clerk-vs-custom",
       "tag": "mini-ecommerce",
-      "title": "Autenticación para el portfolio",
-      "prompt": "Necesitás login, sesiones, rutas protegidas y rol admin en la tienda demo. ¿Qué enfoque elegís?",
+      "title": {
+        "en": "Authentication for the portfolio",
+        "es": "Autenticación para el portfolio"
+      },
+      "prompt": {
+        "en": "You need login, sessions, protected routes, and an admin role in the store demo. Which approach do you choose?",
+        "es": "Necesitás login, sesiones, rutas protegidas y rol admin en la tienda demo. ¿Qué enfoque elegís?"
+      },
       "options": [
         {
           "id": "custom",
-          "label": "Auth custom (hashes, tokens, recovery)",
+          "label": {
+            "en": "Custom auth (hashes, tokens, recovery)",
+            "es": "Auth custom (hashes, tokens, recovery)"
+          },
           "correct": false,
-          "feedback": "Auth custom demuestra criptografía, pero el riesgo de bugs de seguridad es alto y no es el foco de este portfolio."
+          "feedback": {
+            "en": "Custom auth shows off cryptography, but the risk of security bugs is high and it's not the focus of this portfolio.",
+            "es": "Auth custom demuestra criptografía, pero el riesgo de bugs de seguridad es alto y no es el foco de este portfolio."
+          }
         },
         {
           "id": "clerk",
-          "label": "Clerk (@clerk/nextjs)",
+          "label": {
+            "en": "Clerk (@clerk/nextjs)",
+            "es": "Clerk (@clerk/nextjs)"
+          },
           "correct": true,
-          "feedback": "Correcto. Clerk integra middleware, sign-in UI y auth() en APIs con pocas líneas. Demostrás consumir auth de producto como en una startup."
+          "feedback": {
+            "en": "Correct. Clerk integrates middleware, sign-in UI, and auth() in APIs with just a few lines. You demonstrate consuming product auth like at a startup.",
+            "es": "Correcto. Clerk integra middleware, sign-in UI y auth() en APIs con pocas líneas. Demostrás consumir auth de producto como en una startup."
+          }
         },
         {
           "id": "authjs",
-          "label": "Auth.js con adaptador DB custom",
+          "label": {
+            "en": "Auth.js with custom DB adapter",
+            "es": "Auth.js con adaptador DB custom"
+          },
           "correct": false,
-          "feedback": "Auth.js es válido y gratis, pero requiere más configuración (adaptador, callbacks, páginas). Para un portfolio, Clerk tiene mejor ROI."
+          "feedback": {
+            "en": "Auth.js is valid and free, but requires more setup (adapter, callbacks, pages). For a portfolio, Clerk has better ROI.",
+            "es": "Auth.js es válido y gratis, pero requiere más configuración (adaptador, callbacks, páginas). Para un portfolio, Clerk tiene mejor ROI."
+          }
         }
       ]
     },
     {
       "id": "ssg-vs-csr",
       "tag": "mini-ecommerce",
-      "title": "Página de catálogo de productos",
-      "prompt": "El catálogo cambia poco, necesitás buen SEO y carga rápida. El carrito sí necesita estado interactivo en el browser. ¿Cómo renderizás /products?",
+      "title": {
+        "en": "Product catalog page",
+        "es": "Página de catálogo de productos"
+      },
+      "prompt": {
+        "en": "The catalog changes rarely, you need good SEO and fast loading. The cart does need interactive state in the browser. How do you render /products?",
+        "es": "El catálogo cambia poco, necesitás buen SEO y carga rápida. El carrito sí necesita estado interactivo en el browser. ¿Cómo renderizás /products?"
+      },
       "options": [
         {
           "id": "csr",
-          "label": "CSR puro — React pinta todo en el cliente",
+          "label": {
+            "en": "Pure CSR — React renders everything on the client",
+            "es": "CSR puro — React pinta todo en el cliente"
+          },
           "correct": false,
-          "feedback": "CSR es simple mentalmente, pero Google ve un cascarón vacío al principio y la primera carga es más lenta."
+          "feedback": {
+            "en": "CSR is mentally simple, but Google sees an empty shell at first and the initial load is slower.",
+            "es": "CSR es simple mentalmente, pero Google ve un cascarón vacío al principio y la primera carga es más lenta."
+          }
         },
         {
           "id": "ssg-isr",
-          "label": "SSG + ISR (revalidate: 60) para catálogo; Client Components para carrito",
+          "label": {
+            "en": "SSG + ISR (revalidate: 60) for catalog; Client Components for cart",
+            "es": "SSG + ISR (revalidate: 60) para catálogo; Client Components para carrito"
+          },
           "correct": true,
-          "feedback": "Correcto. HTML estático al instante para SEO/velocidad; el carrito sigue siendo reactivo en el cliente donde hace falta."
+          "feedback": {
+            "en": "Correct. Instant static HTML for SEO/speed; the cart stays reactive on the client where it matters.",
+            "es": "Correcto. HTML estático al instante para SEO/velocidad; el carrito sigue siendo reactivo en el cliente donde hace falta."
+          }
         },
         {
           "id": "ssr-all",
-          "label": "SSR en cada request para todo el sitio",
+          "label": {
+            "en": "SSR on every request for the entire site",
+            "es": "SSR en cada request para todo el sitio"
+          },
           "correct": false,
-          "feedback": "SSR en cada visita cuesta más en Vercel sin beneficio claro para un catálogo que cambia poco."
+          "feedback": {
+            "en": "SSR on every visit costs more on Vercel with no clear benefit for a catalog that changes rarely.",
+            "es": "SSR en cada visita cuesta más en Vercel sin beneficio claro para un catálogo que cambia poco."
+          }
         }
       ]
     },
     {
       "id": "server-total",
       "tag": "mini-ecommerce",
-      "title": "Checkout y manipulación de precios",
-      "prompt": "Un usuario abre DevTools y envía { total: 0.01 } en el POST de checkout. ¿Qué hacés?",
+      "title": {
+        "en": "Checkout and price manipulation",
+        "es": "Checkout y manipulación de precios"
+      },
+      "prompt": {
+        "en": "A user opens DevTools and sends { total: 0.01 } in the checkout POST. What do you do?",
+        "es": "Un usuario abre DevTools y envía { total: 0.01 } en el POST de checkout. ¿Qué hacés?"
+      },
       "options": [
         {
           "id": "trust",
-          "label": "Confiar en body.total del cliente",
+          "label": {
+            "en": "Trust body.total from the client",
+            "es": "Confiar en body.total del cliente"
+          },
           "correct": false,
-          "feedback": "Red flag inmediata en entrevista. El navegador es territorio del usuario — nunca confíes en totales del cliente."
+          "feedback": {
+            "en": "Immediate red flag in an interview. The browser is user territory — never trust totals from the client.",
+            "es": "Red flag inmediata en entrevista. El navegador es territorio del usuario — nunca confíes en totales del cliente."
+          }
         },
         {
           "id": "recalc",
-          "label": "Recalcular total en servidor con computeOrderTotal()",
+          "label": {
+            "en": "Recalculate total on the server with computeOrderTotal()",
+            "es": "Recalcular total en servidor con computeOrderTotal()"
+          },
           "correct": true,
-          "feedback": "Correcto. El servidor es la fuente de verdad del dinero. Comparás item.id con el catálogo real y rechazás si no coincide."
+          "feedback": {
+            "en": "Correct. The server is the source of truth for money. You compare item.id against the real catalog and reject mismatches.",
+            "es": "Correcto. El servidor es la fuente de verdad del dinero. Comparás item.id con el catálogo real y rechazás si no coincide."
+          }
         },
         {
           "id": "hide",
-          "label": "Ocultar el campo total del formulario",
+          "label": {
+            "en": "Hide the total field from the form",
+            "es": "Ocultar el campo total del formulario"
+          },
           "correct": false,
-          "feedback": "Ocultar el campo no impide que alguien manipule la request HTTP directamente."
+          "feedback": {
+            "en": "Hiding the field doesn't stop someone from manipulating the HTTP request directly.",
+            "es": "Ocultar el campo no impide que alguien manipule la request HTTP directamente."
+          }
         }
       ]
     },
     {
       "id": "vanilla-job-board",
       "tag": "mini-job-board",
-      "title": "¿Migrar mini-job-board a React?",
-      "prompt": "Un recruiter dice que quiere ver React everywhere. mini-ecommerce ya usa Next.js. ¿Migrás el job board?",
+      "title": {
+        "en": "Migrate mini-job-board to React?",
+        "es": "¿Migrar mini-job-board a React?"
+      },
+      "prompt": {
+        "en": "A recruiter says they want to see React everywhere. mini-ecommerce already uses Next.js. Do you migrate the job board?",
+        "es": "Un recruiter dice que quiere ver React everywhere. mini-ecommerce ya usa Next.js. ¿Migrás el job board?"
+      },
       "options": [
         {
           "id": "migrate",
-          "label": "Sí, migrar a React + Vite",
+          "label": {
+            "en": "Yes, migrate to React + Vite",
+            "es": "Sí, migrar a React + Vite"
+          },
           "correct": false,
-          "feedback": "Duplicaría el mensaje de mini-ecommerce y añadiría build/bundler para un sitio que vive bien en GitHub Pages estático."
+          "feedback": {
+            "en": "It would duplicate mini-ecommerce's message and add build/bundler overhead for a site that works fine as static GitHub Pages.",
+            "es": "Duplicaría el mensaje de mini-ecommerce y añadiría build/bundler para un sitio que vive bien en GitHub Pages estático."
+          }
         },
         {
           "id": "keep",
-          "label": "No — mantener vanilla JS a propósito",
+          "label": {
+            "en": "No — keep vanilla JS on purpose",
+            "es": "No — mantener vanilla JS a propósito"
+          },
           "correct": true,
-          "feedback": "Correcto. Demostrás dominio de fundamentos (DOM, eventos, fetch) sin que React oculte esas capas. mini-ecommerce ya cubre React."
+          "feedback": {
+            "en": "Correct. You demonstrate mastery of fundamentals (DOM, events, fetch) without React hiding those layers. mini-ecommerce already covers React.",
+            "es": "Correcto. Demostrás dominio de fundamentos (DOM, eventos, fetch) sin que React oculte esas capas. mini-ecommerce ya cubre React."
+          }
         },
         {
           "id": "rewrite",
-          "label": "Reescribir en Python Flask",
+          "label": {
+            "en": "Rewrite in Python Flask",
+            "es": "Reescribir en Python Flask"
+          },
           "correct": false,
-          "feedback": "Python no es parte de tu stack de portfolio y no aporta señal para roles frontend/fullstack JS."
+          "feedback": {
+            "en": "Python isn't part of your portfolio stack and doesn't signal much for frontend/fullstack JS roles.",
+            "es": "Python no es parte de tu stack de portfolio y no aporta señal para roles frontend/fullstack JS."
+          }
         }
       ]
     },
     {
       "id": "url-state",
       "tag": "mini-job-board",
-      "title": "Estado de filtros compartible",
-      "prompt": "Querés que un amigo abra el link y vea exactamente tus filtros (remote + React). ¿Dónde guardás el estado?",
+      "title": {
+        "en": "Shareable filter state",
+        "es": "Estado de filtros compartible"
+      },
+      "prompt": {
+        "en": "You want a friend to open the link and see exactly your filters (remote + React). Where do you store the state?",
+        "es": "Querés que un amigo abra el link y vea exactamente tus filtros (remote + React). ¿Dónde guardás el estado?"
+      },
       "options": [
         {
           "id": "memory",
-          "label": "Solo variables en memoria JS",
+          "label": {
+            "en": "JavaScript variables in memory only",
+            "es": "Solo variables en memoria JS"
+          },
           "correct": false,
-          "feedback": "Al recargar o compartir el link se pierde todo. Se siente demo de tutorial, no producto."
+          "feedback": {
+            "en": "On reload or when sharing the link, everything is lost. It feels like a tutorial demo, not a product.",
+            "es": "Al recargar o compartir el link se pierde todo. Se siente demo de tutorial, no producto."
+          }
         },
         {
           "id": "url",
-          "label": "Query params en la URL (?type=remote&q=react)",
+          "label": {
+            "en": "Query params in the URL (?type=remote&q=react)",
+            "es": "Query params en la URL (?type=remote&q=react)"
+          },
           "correct": true,
-          "feedback": "Correcto. La URL es la fuente de verdad compartible. Refresh y atrás/adelante del browser funcionan."
+          "feedback": {
+            "en": "Correct. The URL is the shareable source of truth. Refresh and browser back/forward work.",
+            "es": "Correcto. La URL es la fuente de verdad compartible. Refresh y atrás/adelante del browser funcionan."
+          }
         },
         {
           "id": "session",
-          "label": "sessionStorage sin URL",
+          "label": {
+            "en": "sessionStorage without URL",
+            "es": "sessionStorage sin URL"
+          },
           "correct": false,
-          "feedback": "sessionStorage no genera links compartibles — cada pestaña es aislada."
+          "feedback": {
+            "en": "sessionStorage doesn't produce shareable links — each tab is isolated.",
+            "es": "sessionStorage no genera links compartibles — cada pestaña es aislada."
+          }
         }
       ]
     },
     {
       "id": "ai-fallback",
       "tag": "ia-stories",
-      "title": "API de IA sin créditos (HTTP 402)",
-      "prompt": "Replicate devuelve 402 — sin créditos. Un visitante del portfolio abre tu demo. ¿Qué muestra la app?",
+      "title": {
+        "en": "AI API with no credits (HTTP 402)",
+        "es": "API de IA sin créditos (HTTP 402)"
+      },
+      "prompt": {
+        "en": "Replicate returns 402 — no credits. A portfolio visitor opens your demo. What does the app show?",
+        "es": "Replicate devuelve 402 — sin créditos. Un visitante del portfolio abre tu demo. ¿Qué muestra la app?"
+      },
       "options": [
         {
           "id": "error",
-          "label": "Solo un error rojo",
+          "label": {
+            "en": "Only a red error message",
+            "es": "Solo un error rojo"
+          },
           "correct": false,
-          "feedback": "Técnicamente correcto, pero mata la demo en entrevistas. El visitante ve una app rota."
+          "feedback": {
+            "en": "Technically correct, but it kills the demo in interviews. The visitor sees a broken app.",
+            "es": "Técnicamente correcto, pero mata la demo en entrevistas. El visitante ve una app rota."
+          }
         },
         {
           "id": "fallback",
-          "label": "Fallback local determinista + aviso honesto",
+          "label": {
+            "en": "Deterministic local fallback + honest notice",
+            "es": "Fallback local determinista + aviso honesto"
+          },
           "correct": true,
-          "feedback": "Correcto. localGenerator.js sigue funcionando. Demostrás contratos HTTP y degradación elegante sin fingir que es IA."
+          "feedback": {
+            "en": "Correct. localGenerator.js keeps working. You demonstrate HTTP contracts and graceful degradation without pretending it's AI.",
+            "es": "Correcto. localGenerator.js sigue funcionando. Demostrás contratos HTTP y degradación elegante sin fingir que es IA."
+          }
         },
         {
           "id": "fake",
-          "label": "Mostrar texto random sin avisar",
+          "label": {
+            "en": "Show random text without warning",
+            "es": "Mostrar texto random sin avisar"
+          },
           "correct": false,
-          "feedback": "Destruye confianza si alguien mira la pestaña Network y ve el 402."
+          "feedback": {
+            "en": "Destroys trust if someone checks the Network tab and sees the 402.",
+            "es": "Destruye confianza si alguien mira la pestaña Network y ve el 402."
+          }
         }
       ]
     },
     {
       "id": "sarava-static",
       "tag": "sarava",
-      "title": "Sitio comunitario sin presupuesto",
-      "prompt": "Saravá necesita hosting gratis, contenido que cambia poco, y diseño moderno. ¿Qué deploy elegís?",
+      "title": {
+        "en": "Community site with no budget",
+        "es": "Sitio comunitario sin presupuesto"
+      },
+      "prompt": {
+        "en": "Saravá needs free hosting, content that changes rarely, and a modern design. Which deploy do you choose?",
+        "es": "Saravá necesita hosting gratis, contenido que cambia poco, y diseño moderno. ¿Qué deploy elegís?"
+      },
       "options": [
         {
           "id": "wordpress",
-          "label": "WordPress en hosting compartido",
+          "label": {
+            "en": "WordPress on shared hosting",
+            "es": "WordPress en hosting compartido"
+          },
           "correct": false,
-          "feedback": "Funciona, pero tenías WordPress legacy. Next te da más control de diseño y performance."
+          "feedback": {
+            "en": "It works, but you had legacy WordPress. Next gives you more design control and performance.",
+            "es": "Funciona, pero tenías WordPress legacy. Next te da más control de diseño y performance."
+          }
         },
         {
           "id": "static-export",
-          "label": "Next.js con output: export → GitHub Pages",
+          "label": {
+            "en": "Next.js with output: export → GitHub Pages",
+            "es": "Next.js con output: export → GitHub Pages"
+          },
           "correct": true,
-          "feedback": "Correcto. Desarrollás con React/TypeScript, pero producción son archivos estáticos gratis en docs/."
+          "feedback": {
+            "en": "Correct. You develop with React/TypeScript, but production is free static files in docs/.",
+            "es": "Correcto. Desarrollás con React/TypeScript, pero producción son archivos estáticos gratis en docs/."
+          }
         },
         {
           "id": "ssr-vercel",
-          "label": "SSR en Vercel con DB",
+          "label": {
+            "en": "SSR on Vercel with a database",
+            "es": "SSR en Vercel con DB"
+          },
           "correct": false,
-          "feedback": "Costo y complejidad sin beneficio para páginas mayormente informativas."
+          "feedback": {
+            "en": "Cost and complexity with no benefit for mostly informational pages.",
+            "es": "Costo y complejidad sin beneficio para páginas mayormente informativas."
+          }
         }
       ]
     }

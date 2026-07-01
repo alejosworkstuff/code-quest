@@ -1,10 +1,11 @@
 import { initProgress, completeGame, getGameProgress } from "../progress.js";
 import { showModal } from "../ui.js";
+import { t } from "../i18n.js";
 
 const GAME_ID = "auth-gate";
 
 const ROLES = {
-  guest: { label: "Guest (sin login)", id: "guest" },
+  guest: { id: "guest" },
   user: { label: "User (logged in)", id: "user" },
   admin: { label: "Admin", id: "admin" },
 };
@@ -23,6 +24,11 @@ const rolesEl = document.getElementById("auth-roles");
 const routesEl = document.getElementById("auth-routes");
 const explainEl = document.getElementById("auth-explain");
 
+function roleLabel(role) {
+  if (role.id === "guest") return t("authGate.guest");
+  return role.label;
+}
+
 function canAccess(route, role) {
   if (route.public) return true;
   return route.roles?.includes(role);
@@ -32,7 +38,7 @@ function renderRoles() {
   rolesEl.innerHTML = Object.values(ROLES)
     .map(
       (r) =>
-        `<button type="button" class="auth-role ${r.id === activeRole ? "auth-role--active" : ""}" data-role="${r.id}">${r.label}</button>`
+        `<button type="button" class="auth-role ${r.id === activeRole ? "auth-role--active" : ""}" data-role="${r.id}">${roleLabel(r)}</button>`
     )
     .join("");
 
@@ -51,23 +57,26 @@ function renderRoutes() {
     return `
       <div class="auth-route ${allowed ? "auth-route--allowed" : "auth-route--denied"}">
         <span>${route.path}</span>
-        <span class="auth-route__status">${allowed ? "✓ Permitido" : "✗ Redirect /sign-in"}</span>
+        <span class="auth-route__status">${allowed ? t("authGate.allowed") : t("authGate.denied")}</span>
       </div>
     `;
   }).join("");
 
   explainEl.innerHTML = `
     <div class="feedback-box">
-      <p><strong>Clerk middleware</strong> en mini-ecommerce protege rutas como <code>/my-purchases</code> y <code>/admin</code>.
-      Un guest es redirigido a sign-in. El rol admin vive en metadata de Clerk.</p>
+      <p>${t("authGate.explain")}</p>
     </div>
   `;
 }
 
-function init() {
-  initProgress();
+function render() {
   renderRoles();
   renderRoutes();
+}
+
+function init() {
+  initProgress();
+  render();
 
   let rolesVisited = new Set(["guest"]);
   rolesEl.addEventListener("click", (e) => {
@@ -77,8 +86,8 @@ function init() {
       if (rolesVisited.size >= 3 && !getGameProgress(GAME_ID).completed) {
         completeGame(GAME_ID);
         showModal({
-          title: "¡Auth Gate completado!",
-          body: "Probaste guest, user y admin en todas las rutas.",
+          title: t("authGate.doneTitle"),
+          body: t("authGate.doneBody"),
           xp: 25,
           badge: { icon: "🔐", name: "Gate Keeper" },
         });
@@ -88,3 +97,4 @@ function init() {
 }
 
 init();
+window.addEventListener("code-quest:lang-change", () => render());

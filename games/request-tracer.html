@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" data-game-id="request-tracer">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,24 +10,27 @@
     <link rel="stylesheet" href="../css/base.css" />
     <link rel="stylesheet" href="../css/games.css" />
     <link rel="stylesheet" href="../css/animations.css" />
+    <link rel="stylesheet" href="../css/hub.css" />
   </head>
   <body>
     <canvas id="bg-canvas" aria-hidden="true"></canvas>
     <div class="page-shell game-layout">
       <header class="game-header">
         <div>
-          <a href="../index.html" class="btn btn-ghost btn-sm">← Hub</a>
-          <h1>Request Tracer</h1>
-          <p>Trazá el flujo de checkout en mini-ecommerce: UI → API → Redis → Success.</p>
+          <a href="../index.html" class="btn btn-ghost btn-sm" data-i18n="nav.hub">← Hub</a>
+          <h1 data-i18n="games.request-tracer.title">Request Tracer</h1>
+          <p data-i18n="games.request-tracer.subtitle">Trace mini-ecommerce checkout: UI → API → Redis → Success.</p>
         </div>
         <div class="game-meta">
-          <span class="badge-pill">Mundo 4</span>
+          <span class="badge-pill" data-i18n="games.request-tracer.world">World 4</span>
         </div>
       </header>
       <p id="tracer-mission" style="margin-bottom:20px"></p>
       <div id="tracer-diagram" class="tracer-diagram glass"></div>
       <div id="tracer-detail" class="tracer-detail glass"></div>
     </div>
+    <script type="module" src="../js/i18n.js"></script>
+    <script type="module" src="../js/settings.js"></script>
     <script type="module" src="../js/background.js"></script>
     <script type="module" src="../js/games/request-tracer.js"></script>
   </body>
